@@ -1,5 +1,6 @@
-const doctorModel = require("../models/doctorModel");
-const userModel = require("../models/userModels");
+import doctorModel from "../models/doctorModel.js";
+import userModel from "../models/userModels.js";
+
 
 const getAllUsersController = async (req, res) => {
   try {
@@ -66,7 +67,7 @@ const changeAccountStatusController = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getAllDoctorsController,
   getAllUsersController,
   changeAccountStatusController,

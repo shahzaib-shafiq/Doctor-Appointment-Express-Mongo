@@ -1,10 +1,11 @@
-const userModel = require("../models/userModels");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const doctorModel = require("../models/doctorModel");
-const appointmentModel = require("../models/appointmentModel");
-const moment = require("moment");
+import userModel from "../models/userModels.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import doctorModel from "../models/doctorModel.js";
+import appointmentModel from "../models/appointmentModel.js";
+import moment from "moment";
 //register callback
+import express from 'express';
 const registerController = async (req, res) => {
   try {
     const exisitingUser = await userModel.findOne({ email: req.body.email });
@@ -264,7 +265,7 @@ const userAppointmentsController = async (req, res) => {
   }
 };
 
-module.exports = {
+export  {
   loginController,
   registerController,
   authController,

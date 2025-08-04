@@ -1,5 +1,5 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   loginController,
   registerController,
   authController,
@@ -10,8 +10,8 @@ const {
   bookeAppointmnetController,
   bookingAvailabilityController,
   userAppointmentsController,
-} = require("../controllers/userCtrl");
-const authMiddleware = require("../middlewares/authMiddleware");
+} from "../controllers/userCtrl.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 //router onject
 const router = express.Router();
@@ -58,4 +58,4 @@ router.post(
 //Appointments List
 router.get("/user-appointments", authMiddleware, userAppointmentsController);
 
-module.exports = router;
+export default router;

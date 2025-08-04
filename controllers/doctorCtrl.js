@@ -1,6 +1,8 @@
-const appointmentModel = require("../models/appointmentModel");
-const doctorModel = require("../models/doctorModel");
-const userModel = require("../models/userModels");
+// const appointmentModel = require("../models/appointmentModel");
+// const doctorModel = require("../models/doctorModel");
+import appointmentModel from "../models/appointmentModel.js";
+import doctorModel from "../models/doctorModel.js";
+import userModel from '../models/userModels.js'
 const getDoctorInfoController = async (req, res) => {
   try {
     const doctor = await doctorModel.findOne({ userId: req.body.userId });
@@ -110,7 +112,7 @@ const updateStatusController = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getDoctorInfoController,
   updateProfileController,
   getDoctorByIdController,

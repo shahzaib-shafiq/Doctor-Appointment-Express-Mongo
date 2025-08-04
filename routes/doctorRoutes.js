@@ -1,12 +1,12 @@
-const express = require("express");
-const {
+import express from "express";
+import  {
   getDoctorInfoController,
   updateProfileController,
   getDoctorByIdController,
   doctorAppointmentsController,
   updateStatusController,
-} = require("../controllers/doctorCtrl");
-const authMiddleware = require("../middlewares/authMiddleware");
+} from "../controllers/doctorCtrl.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 //POST SINGLE DOC INFO
@@ -28,4 +28,4 @@ router.get(
 //POST Update Status
 router.post("/update-status", authMiddleware, updateStatusController);
 
-module.exports = router;
+export default router;
