@@ -8,6 +8,13 @@ import moment from "moment";
 import express from 'express';
 const registerController = async (req, res) => {
   try {
+  if (!req.body.email||!req.body.password)
+  {
+    return res.status(400).send({
+      message: "Email and Password are required",
+      success: false,
+    });
+  }
     const exisitingUser = await userModel.findOne({ email: req.body.email });
     if (exisitingUser) {
       return res
