@@ -4,17 +4,42 @@ import jwt from "jsonwebtoken";
 import doctorModel from "../models/doctorModel.js";
 import appointmentModel from "../models/appointmentModel.js";
 import moment from "moment";
-//register callback
 import express from 'express';
+import Joi from 'joi'
+//register callback
+const registerSchema = Joi.object({
+
+  name: Joi.string().required().messages({
+    'string.empty': 'Name is required',
+    'string.email': 'Invalid Name format',
+  }),
+  email: Joi.string().email().required().messages({
+    'string.empty': 'Email is required',
+    'string.email': 'Invalid email format',
+  }),
+  password: Joi.string().min(6).max(24).required().messages({
+    'string.empty': 'Password is required',
+    'string.min': 'Password should be at least 6 characters long',
+  }), tlds: { allow: ['com', 'net'] },
+  isAdmin: Joi.boolean(),
+  isDoctor: Joi.boolean()
+
+});
 const registerController = async (req, res) => {
   try {
-  if (!req.body.email||!req.body.password)
-  {
-    return res.status(400).send({
-      message: "Email and Password are required",
-      success: false,
-    });
-  }
+    const { error } = registerSchema.validate(req.body);
+    if (error) {
+      return res.status(400).send({
+        success: false,
+        message: error.details[0].message,
+      });
+    }
+    // if (!req.body.email || !req.body.password) {
+    //   return res.status(400).send({
+    //     message: "Email and Password are required",
+    //     success: false,
+    //   });
+    // }
     const exisitingUser = await userModel.findOne({ email: req.body.email });
     if (exisitingUser) {
       return res
@@ -50,7 +75,7 @@ const loginController = async (req, res) => {
     if (!isMatch) {
       return res
         .status(200)
-        .send({ message: "Invlid EMail or Password", success: false });
+        .send({ message: "Invlid Email or Password", success: false });
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
@@ -272,7 +297,7 @@ const userAppointmentsController = async (req, res) => {
   }
 };
 
-export  {
+export {
   loginController,
   registerController,
   authController,
